@@ -1,9 +1,17 @@
 
 drupal8_testing.ajax_form:
-  path: '/testing/form'
+  path: '/drupal8_testing/form'
   defaults:
     _form: '\Drupal\drupal8_testing\Form\AjaxForm'
     _title: 'AjaxForm'
   requirements:
     _permission: 'admin'
 
+
+drupal8_testing.ajax_controller_index:
+  path: '/drupal8_testing/index'
+  defaults:
+    _controller: '\Drupal\drupal8_testing\Controller\AjaxController::index'
+    _title: 'ajax.controller'
+  requirements:
+    _permission: 'access content'

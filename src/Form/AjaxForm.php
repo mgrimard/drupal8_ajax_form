@@ -60,19 +60,20 @@ class AjaxForm extends FormBase {
       '#title' => $this->t('Date'),
     ];
 
+    $form['ajax_wrapper']['submit_button'] = [
+      '#type' => 'submit',
+      '#value' => 'Load',
+      '#ajax' => [
+        'callback' => [$this, 'ajaxFormCallback'],
+      ],
+    ];
+
     $form['ajax_wrapper']['result'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Result'),
       '#default_value' => $result,
     ];
 
-    $form['ajax_wrapper']['submit_button'] = [
-      '#type' => 'submit',
-      '#value' => 'submit',
-      '#ajax' => [
-        'callback' => [$this, 'ajaxFormCallback'],
-      ],
-    ];
     return $form;
   }
 
