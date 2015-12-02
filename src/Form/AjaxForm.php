@@ -39,10 +39,12 @@ class AjaxForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    if ($form_state->getValue('date')) {
+    if (!empty($form_state->getValue('date'))) {
+      dd('set');
       $result = 'Date Set';
       //$form_state->setValue('result', $result);
     } else {
+      dd('not-set');
       $result = 'Date Not Set';
     }
 
@@ -56,7 +58,6 @@ class AjaxForm extends FormBase {
     $form['ajax_wrapper']['date'] = [
       '#type' => 'date',
       '#title' => $this->t('Date'),
-      '#default_value' => date('Y-m-d', strtotime('today')),
     ];
 
     $form['ajax_wrapper']['result'] = [
@@ -79,19 +80,21 @@ class AjaxForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
+    dd('validate');
   }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    dd('submit');
     $form_state->setRebuild();
   }
 
   public function ajaxFormCallback(array &$form, FormStateInterface $form_state) {
+    dd('callback');
     $response = new AjaxResponse();
-    $response->addcommand(new HtmlCommand('#ajax_wrapper', $form));
+    $response->addCommand(new HtmlCommand('#ajax_wrapper', $form));
     return $response;
   }
 
