@@ -39,12 +39,11 @@ class AjaxForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    if (!empty($form_state->getValue('date'))) {
-      dd('set');
+    if ($form_state->hasValue('date')) {
+      $date = $form_state->get('date');
       $result = 'Date Set';
-      //$form_state->setValue('result', $result);
     } else {
-      dd('not-set');
+      $form_state->setValue('date', REQUEST_TIME);
       $result = 'Date Not Set';
     }
 
@@ -71,7 +70,7 @@ class AjaxForm extends FormBase {
     $form['ajax_wrapper']['result'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Result'),
-      '#default_value' => $result,
+      '#value' => $result,
     ];
 
     return $form;
