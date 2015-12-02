@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Contains drupal8_testing.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function drupal8_testing_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the drupal8_testing module.
+    case 'help.page.drupal8_testing':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This is a module for testing things.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function drupal8_testing_theme() {
+  $theme = [];
+
+  return $theme;
+}

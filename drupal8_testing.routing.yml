@@ -1,0 +1,9 @@
+
+drupal8_testing.ajax_form:
+  path: '/testing/form'
+  defaults:
+    _form: '\Drupal\drupal8_testing\Form\AjaxForm'
+    _title: 'AjaxForm'
+  requirements:
+    _permission: 'admin'
+
