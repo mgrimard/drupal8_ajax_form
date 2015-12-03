@@ -39,11 +39,14 @@ class AjaxForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+
     if ($form_state->hasValue('date')) {
-      $date = $form_state->get('date');
-      $result = 'Date Set';
+      $userInput = $form_state->getUserInput();
+      $userInput['result'] = 'Date Set';
+      $form_state->setUserInput($userInput);
     } else {
-      $form_state->setValue('date', REQUEST_TIME);
+      $form_state->setValue('date', date('Y-m-d', REQUEST_TIME));
+      $form_state->setValue('result', 'date not set');
       $result = 'Date Not Set';
     }
 
@@ -70,7 +73,7 @@ class AjaxForm extends FormBase {
     $form['ajax_wrapper']['result'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Result'),
-      '#value' => $result,
+      '#default_value' => $result,
     ];
 
     return $form;
@@ -88,13 +91,18 @@ class AjaxForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     dd('submit');
+    dd('Submitted Result: ' . $form_state->getValue('result'));
     $form_state->setRebuild();
   }
 
   public function ajaxFormCallback(array &$form, FormStateInterface $form_state) {
     dd('callback');
+    //dd(array_keys($form['ajax_wrapper']));
     $response = new AjaxResponse();
-    $response->addCommand(new HtmlCommand('#ajax_wrapper', $form));
+    $response->addCommand(new HtmlCommand('#ajax_wrapper', $form['ajax_wrapper']));
+    $status_messages = ['#type' => 'status_messages'];
+    $response->addCommand(new HtmlCommand('.highlighted aside .region', $status_messages));
+
     return $response;
   }
 
